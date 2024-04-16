@@ -1,7 +1,8 @@
 #!/usr/bin/python3
+import csv
 import requests
 import sys
-import csv
+
 
 
 def to_do_list(employee_id):
