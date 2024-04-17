@@ -7,10 +7,10 @@ import sys
 def main():
 
     employee_id = sys.argv[1]
-    employee = 'https://jsonplaceholder.typicode.com/users/{}'.format(employee_id)
+    empl = 'https://jsonplaceholder.typicode.com/users/{}'.format(employee_id)
     todos = 'https://jsonplaceholder.typicode.com/todos/?userId={}'.format(
         employee_id)
-    name = requests.get(employee).json().get('username')
+    name = requests.get(empl).json().get('username')
     request_todo = requests.get(todos).json()
 
     with open('{}.csv'.format(employee_id), 'w+') as file:
