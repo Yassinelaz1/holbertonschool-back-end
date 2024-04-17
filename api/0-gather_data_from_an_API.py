@@ -10,9 +10,6 @@ import sys
 def to_do_list(employee_id):
     url = f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
     response = requests.get(url)
-    if response.status_code != 200:
-        print(f"Failed to fetch data: {response.status_code}")
-        return
 
     todos = response.json()
     total_tasks = len(todos)
