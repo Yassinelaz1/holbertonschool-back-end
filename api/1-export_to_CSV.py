@@ -1,25 +1,28 @@
 #!/usr/bin/python3
 """ Python script to export data in the CSV format."""
+import csv
 import requests
 import sys
 
 
-def main():
+def to_do_list(employee_id):
 
-    employee_id = sys.argv[1]
-    empl = 'https://jsonplaceholder.typicode.com/users/{}'.format(employee_id)
-    todos = 'https://jsonplaceholder.typicode.com/todos/?userId={}'.format(
-        employee_id)
-    name = requests.get(empl).json().get('username')
-    request_todo = requests.get(todos).json()
-
-    with open('{}.csv'.format(employee_id), 'w+') as file:
-        for todo in request_todo:
-            data = '"{}","{}","{}","{}"\n'.format(
-                employee_id, name, todo.get('completed'), todo.get('title'))
-            file.write(data)
+    todos = requests.get(
+        f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
+    ).json()
+    response = requests.get(
+        f"https://jsonplaceholder.\
+typicode.com/users/{employee_id}"
+    ).json()
+    with open(f"{employee_id}.csv", mode="w") as csvfile:
+        writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
+        for todo in todos:
+            writer.writerow(
+                [(employee_id), response["username"],
+                 todo["completed"], todo["title"]]
+            )
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 2:
-        main()
+    employee_id = sys.argv[1]
+    to_do_list(employee_id)
