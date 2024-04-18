@@ -8,19 +8,20 @@ import sys
 
 
 def to_do_list(employee_id):
-    url = f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
-    response = requests.get(url)
-
-    todos = response.json()
-    total_tasks = len(todos)
-    done_tasks = [todo for todo in todos if todo['completed']]
-    num_done_tasks = len(done_tasks)
-    employee_name = todos[0]['userId'] if todos else "Unknown"
-
-    print(f"Employee {employee_name} is done with tasks"
-          f"({num_done_tasks}/{total_tasks}):")
-    for task in done_tasks:
-        print(f"\t{task['title']}")
+    todos = requests.get(
+        f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
+    ).json()
+    info = requests.get(
+        f"https://jsonplaceholder.\
+typicode.com/users/{employee_id}"
+    ).json()
+    task_done = [task["title"] for task in todos if task["completed"]]
+    print(
+        f"Employee {info['name']} is done with tasks\
+({len(task_done)}/{len(todos)}):"
+    )
+    for task in task_done:
+        print("\t {}".format(task))
 
 
 if __name__ == "__main__":
