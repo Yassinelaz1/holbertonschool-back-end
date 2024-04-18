@@ -1,12 +1,11 @@
 #!/usr/bin/python3
-""""""
+"""export data in the JSON format."""
 
 import json
 import requests
 
 
 def fetch_user_data():
-    
     url = "https://jsonplaceholder.typicode.com/"
     employee = requests.get(url + "users").json()
 
